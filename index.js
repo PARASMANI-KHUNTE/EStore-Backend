@@ -4,7 +4,17 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dbName = process.env.dbName
 const app = express();
-app.use(cors());
+// CORS configuration
+const corsOptions = {
+  origin: ['http://localhost:5000','https://estore-frontend.onrender.com'], // Add allowed origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'username', 'imageurl'], // Add any other headers you need
+  credentials: true, // Allow cookies and credentials
+};
+
+app.use(cors(corsOptions)); // Apply CORS before routes
+// Handle preflight requests for CORS
+app.options('*', cors(corsOptions));
 app.use(express.json());
 
 // Connect to MongoDB
